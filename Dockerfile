@@ -1,17 +1,20 @@
-# Use JDK 17
+# Use Java 17 JDK
 FROM eclipse-temurin:17-jdk
 
 # Set working directory
 WORKDIR /app
 
-# Copy all files to container
+# Copy all files
 COPY . .
 
-# Build the app
+# Give permission to mvnw
+RUN chmod +x mvnw
+
+# Build the app without tests
 RUN ./mvnw clean package -DskipTests
 
-# Expose port
+# Expose the port your app runs on
 EXPOSE 8080
 
-# Run the app
-CMD ["java", "-jar", "target/*.jar"]
+# Run the Spring Boot app
+CMD ["java", "-jar", "target/Quiz-App-0.0.1-SNAPSHOT.jar"]
